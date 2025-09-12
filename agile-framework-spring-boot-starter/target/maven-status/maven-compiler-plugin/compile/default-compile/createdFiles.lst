@@ -1,0 +1,8 @@
+com\agile\framework\autoconfigure\MybatisPlusAutoConfiguration.class
+com\agile\framework\autoconfigure\WebFilterAutoConfiguration.class
+com\agile\framework\autoconfigure\RedisTemplateAutoConfiguration.class
+com\agile\framework\autoconfigure\CorsAutoConfiguration.class
+com\agile\framework\autoconfigure\GlobalBeanAutoConfiguration.class
+com\agile\framework\autoconfigure\FeignConfigAutoConfiguration.class
+com\agile\framework\autoconfigure\ThreadPoolAutoConfiguration.class
+com\agile\framework\autoconfigure\EventClientAutoConfiguration.class

@@ -1,0 +1,13 @@
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\manager\DomainEventManager.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\dto\DefaultDomainEvent.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\client\DomainEventRemoteClient.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\client\DomainEventClient.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\client\callback\DomainEventListener.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\dto\DomainEvent.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\type\EventMode.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\support\impl\RabbitMqEventServiceImpl.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\factory\DomainEventFactory.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\support\EventMqService.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\EventClientProperties.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\client\DomainEventSubscriber.java
+E:\study\agile-framework\agile-framework-event\src\main\java\com\agile\event\config\support\BaseEventMqService.java

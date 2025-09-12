@@ -1,0 +1,215 @@
+{
+  "groups": [
+    {
+      "name": "agile.framework.cors",
+      "type": "com.agile.framework.config.CorsProperties",
+      "sourceType": "com.agile.framework.config.CorsProperties"
+    },
+    {
+      "name": "agile.framework.feign",
+      "type": "com.agile.framework.config.FeignProperties",
+      "sourceType": "com.agile.framework.config.FeignProperties"
+    },
+    {
+      "name": "agile.framework.jackson",
+      "type": "com.agile.framework.config.JacksonProperties",
+      "sourceType": "com.agile.framework.config.JacksonProperties"
+    },
+    {
+      "name": "agile.framework.oss",
+      "type": "com.agile.framework.config.OssProperties",
+      "sourceType": "com.agile.framework.config.OssProperties"
+    },
+    {
+      "name": "agile.framework.oss.ali",
+      "type": "com.agile.framework.config.OssProperties$Ali",
+      "sourceType": "com.agile.framework.config.OssProperties"
+    },
+    {
+      "name": "agile.framework.redis-template",
+      "type": "com.agile.framework.config.RedisTemplateProperties",
+      "sourceType": "com.agile.framework.config.RedisTemplateProperties"
+    },
+    {
+      "name": "agile.framework.thread-pool",
+      "type": "com.agile.framework.config.ThreadPoolProperties",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "agile.framework.cors.allow-credentials",
+      "type": "java.lang.Boolean",
+      "description": "浏览器是否应该包含与请求相关的任何 Cookie",
+      "sourceType": "com.agile.framework.config.CorsProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "agile.framework.cors.allowed-headers",
+      "type": "java.lang.String[]",
+      "description": "允许的请求头",
+      "sourceType": "com.agile.framework.config.CorsProperties"
+    },
+    {
+      "name": "agile.framework.cors.allowed-methods",
+      "type": "java.lang.String[]",
+      "description": "允许跨域的 HTTP 请求方法",
+      "sourceType": "com.agile.framework.config.CorsProperties",
+      "defaultValue": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "OPTIONS"
+      ]
+    },
+    {
+      "name": "agile.framework.cors.allowed-origin",
+      "type": "java.lang.String",
+      "description": "允许跨域的站点，*号表示全部",
+      "sourceType": "com.agile.framework.config.CorsProperties"
+    },
+    {
+      "name": "agile.framework.cors.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启框架的跨域配置",
+      "sourceType": "com.agile.framework.config.CorsProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "agile.framework.cors.exposed-headers",
+      "type": "java.lang.String[]",
+      "description": "允许暴露给前端的响应头",
+      "sourceType": "com.agile.framework.config.CorsProperties",
+      "defaultValue": []
+    },
+    {
+      "name": "agile.framework.cors.max-age",
+      "type": "java.lang.Long",
+      "description": "预响应缓存持续时间的最大时间，默认 1800 秒：30分钟",
+      "sourceType": "com.agile.framework.config.CorsProperties",
+      "defaultValue": 1800
+    },
+    {
+      "name": "agile.framework.cors.path-pattern",
+      "type": "java.lang.String",
+      "description": "允许跨域的路径",
+      "sourceType": "com.agile.framework.config.CorsProperties",
+      "defaultValue": "\/**"
+    },
+    {
+      "name": "agile.framework.feign.auto-transmit",
+      "type": "java.lang.Boolean",
+      "description": "Feign调用是否自动转发请求头信息",
+      "sourceType": "com.agile.framework.config.FeignProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "agile.framework.feign.keys",
+      "type": "java.util.List<java.lang.String>",
+      "description": "转发的配置",
+      "sourceType": "com.agile.framework.config.FeignProperties"
+    },
+    {
+      "name": "agile.framework.jackson.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启框架的 jackson 定制化配置",
+      "sourceType": "com.agile.framework.config.JacksonProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "agile.framework.oss.ali.access-key-id",
+      "type": "java.lang.String",
+      "sourceType": "com.agile.framework.config.OssProperties$Ali"
+    },
+    {
+      "name": "agile.framework.oss.ali.bucket-name",
+      "type": "java.lang.String",
+      "sourceType": "com.agile.framework.config.OssProperties$Ali"
+    },
+    {
+      "name": "agile.framework.oss.ali.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.agile.framework.config.OssProperties$Ali"
+    },
+    {
+      "name": "agile.framework.oss.ali.role-arn",
+      "type": "java.lang.String",
+      "sourceType": "com.agile.framework.config.OssProperties$Ali"
+    },
+    {
+      "name": "agile.framework.oss.ali.secret-access-key",
+      "type": "java.lang.String",
+      "sourceType": "com.agile.framework.config.OssProperties$Ali"
+    },
+    {
+      "name": "agile.framework.oss.ali.sts-endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.agile.framework.config.OssProperties$Ali"
+    },
+    {
+      "name": "agile.framework.oss.provider",
+      "type": "java.lang.String",
+      "description": "OSS 提供者",
+      "sourceType": "com.agile.framework.config.OssProperties",
+      "defaultValue": "ali"
+    },
+    {
+      "name": "agile.framework.redis-template.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启框架提供的 RedisTemplate",
+      "sourceType": "com.agile.framework.config.RedisTemplateProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "agile.framework.thread-pool.await-termination-seconds",
+      "type": "java.lang.Integer",
+      "description": "线程池在 shutdown\/shutdownNow 之后等待时间，默认 3 秒",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties",
+      "defaultValue": 3
+    },
+    {
+      "name": "agile.framework.thread-pool.core-pool-size",
+      "type": "java.lang.Integer",
+      "description": "线程池维护线程最小数量，默认20",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties",
+      "defaultValue": 20
+    },
+    {
+      "name": "agile.framework.thread-pool.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启框架提供的线程池",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "agile.framework.thread-pool.keep-alive-seconds",
+      "type": "java.lang.Integer",
+      "description": "空闲线程存活时间，默认 600 秒",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties",
+      "defaultValue": 600
+    },
+    {
+      "name": "agile.framework.thread-pool.max-pool-size",
+      "type": "java.lang.Integer",
+      "description": "线程池维护线程最大数量，默认200",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties",
+      "defaultValue": 200
+    },
+    {
+      "name": "agile.framework.thread-pool.queue-capacity",
+      "type": "java.lang.Integer",
+      "description": "队列最大长度",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties",
+      "defaultValue": 1000
+    },
+    {
+      "name": "agile.framework.thread-pool.wait-for-tasks-to-complete-on-shutdown",
+      "type": "java.lang.Boolean",
+      "description": "线程池销毁之前执行 shutdown 方法",
+      "sourceType": "com.agile.framework.config.ThreadPoolProperties",
+      "defaultValue": true
+    }
+  ],
+  "hints": []
+}
