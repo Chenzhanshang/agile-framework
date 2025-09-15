@@ -49,6 +49,7 @@
         <xxl.version>2.2.0</xxl.version>
         <dynamic-datasource-version>3.5.0</dynamic-datasource-version>
         <auth0-version>4.4.0</auth0-version>
+        <rocketmq-spring-boot-starter-version>2.2.3</rocketmq-spring-boot-starter-version>
     </properties>
 
     <dependencies>

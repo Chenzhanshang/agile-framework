@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -129,14 +130,6 @@ public class RabbitMqEventServiceImpl extends BaseEventMqService {
             log.error("【领域事件】: 订阅领域事件失败");
             throw FrameworkException.of("【领域事件】: 订阅领域事件失败");
         }
-    }
-
-    /**
-     * 格式化传输对象
-     * 目前采用json格式传输
-     */
-    protected String formatTransmissionObject(Object o) {
-        return JsonUtil.encode(o);
     }
 
     /**

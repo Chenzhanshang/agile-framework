@@ -33,4 +33,36 @@ public class EventClientProperties {
             throw BusinessException.of("[agile.framework.event], serviceName 不能为空");
         }
     }
+
+    @Getter
+    public static enum MqEnum {
+        RABBIT_MQ("rabbitmq"),
+        ROCKET_MQ("rocketmq"),
+        KAFKA("kafka");
+
+        private String value;
+
+        MqEnum(String value) {
+            this.value = value;
+        }
+
+        /**
+         * 获取启用禁用状态枚举对象
+         *
+         * @param value
+         * @return
+         */
+        public static MqEnum getEnum(String value) {
+            if (null == value) {
+                return null;
+            }
+            for (MqEnum s : MqEnum.values()) {
+                if (value.equals(s.getValue())) {
+                    return s;
+                }
+            }
+            return null;
+        }
+
+    }
 }

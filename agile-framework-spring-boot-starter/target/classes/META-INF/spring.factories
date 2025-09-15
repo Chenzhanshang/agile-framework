@@ -1,9 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.agile.framework.autoconfigure.CorsAutoConfiguration,\
-com.agile.framework.autoconfigure.EventClientAutoConfiguration,\
-com.agile.framework.autoconfigure.FeignConfigAutoConfiguration,\
-com.agile.framework.autoconfigure.GlobalBeanAutoConfiguration,\
-com.agile.framework.autoconfigure.MybatisPlusAutoConfiguration,\
-com.agile.framework.autoconfigure.RedisTemplateAutoConfiguration,\
-com.agile.framework.autoconfigure.ThreadPoolAutoConfiguration,\
-com.agile.framework.autoconfigure.WebFilterAutoConfiguration

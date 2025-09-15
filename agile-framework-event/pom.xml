@@ -24,6 +24,12 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>${rocketmq-spring-boot-starter-version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>com.agile</groupId>
             <artifactId>agile-framework-common</artifactId>
             <version>${agile-framework.version}</version>

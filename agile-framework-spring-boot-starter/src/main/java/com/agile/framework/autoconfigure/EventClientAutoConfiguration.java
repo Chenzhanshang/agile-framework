@@ -4,6 +4,7 @@ import com.agile.event.config.EventClientProperties;
 import com.agile.event.config.factory.DomainEventFactory;
 import com.agile.event.config.support.EventMqService;
 import com.agile.event.config.support.impl.RabbitMqEventServiceImpl;
+import com.agile.framework.exception.FrameworkException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author: chenzhanshang
- * @date 2025/09/08 15:21
+ * @date 2025/09/07 15:21
  * @desc:
  **/
 @Slf4j
@@ -22,8 +23,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(EventClientProperties.class)
 @ConditionalOnWebApplication
 @ConditionalOnProperty(name = "agile.framework.event.enabled", havingValue = "true")
-
-
 public class EventClientAutoConfiguration {
 
     @Autowired
@@ -33,6 +32,15 @@ public class EventClientAutoConfiguration {
     public EventMqService eventClient() {
         properties.check();
         DomainEventFactory.init(properties.getServiceName());
-        return new RabbitMqEventServiceImpl();
+        switch (EventClientProperties.MqEnum.getEnum(properties.getMq())) {
+            case RABBIT_MQ:
+                return new RabbitMqEventServiceImpl();
+            case ROCKET_MQ:
+                throw FrameworkException.of("暂不支持的mq实现");
+            case KAFKA:
+                throw FrameworkException.of("暂不支持的mq实现");
+            default:
+                return new RabbitMqEventServiceImpl();
+        }
     }
 }

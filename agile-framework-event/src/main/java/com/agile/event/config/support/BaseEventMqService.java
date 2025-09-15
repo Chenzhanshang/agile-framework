@@ -2,7 +2,9 @@ package com.agile.event.config.support;
 
 import com.agile.event.config.client.DomainEventRemoteClient;
 import com.agile.event.config.client.callback.DomainEventListener;
+import com.agile.framework.util.JsonUtil;
 import com.agile.framework.util.RandomUtils;
+import org.springframework.core.annotation.Order;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -57,5 +59,13 @@ public abstract class BaseEventMqService implements EventMqService, DomainEventR
     @Override
     public void setOnEventListener(DomainEventListener listener) {
         this.domainEventListeners.add(listener);
+    }
+
+    /**
+     * 格式化传输对象
+     * 目前采用json格式传输
+     */
+    protected String formatTransmissionObject(Object o) {
+        return JsonUtil.encode(o);
     }
 }
