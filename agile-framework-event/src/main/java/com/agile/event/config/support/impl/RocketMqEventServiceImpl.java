@@ -8,6 +8,7 @@ import com.agile.event.config.support.BaseEventMqService;
 import com.agile.framework.exception.FrameworkException;
 import com.agile.framework.util.CollectionUtils;
 import com.agile.framework.util.JsonUtil;
+import com.rabbitmq.client.AMQP;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -17,6 +18,7 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -74,6 +76,12 @@ public class RocketMqEventServiceImpl extends BaseEventMqService {
         return send(domainEvent.getSource(), domainEvent.getEventType(), domainEvent);
     }
 
+    /**
+     * todo: 目前随机consumerGroup的方式，只支持从最新 offset 开始消费，是否需要加入参数，支持消费历史消息？？？
+     * @param source    事件源
+     * @param eventType 事件类型
+     * @param consumer  数据消费
+     */
     @Override
     public void subscriber(String source, String eventType, Consumer<DomainEvent<?>> consumer) {
         String consumerGroup = serviceName + "-consumer-" + source + "-" + eventType + "-" + UUID.randomUUID();
@@ -90,7 +98,8 @@ public class RocketMqEventServiceImpl extends BaseEventMqService {
                             log.warn("【领域事件】: 观察者集合为空，消息事件：{}", body);
                             continue;
                         }
-                        DomainEvent<?> domainEvent = JsonUtil.decode(body, DefaultDomainEvent.class);
+                        // 解析消息
+                        DomainEvent<?> domainEvent = getObject(body);
                         for (DomainEventListener listener : domainEventListeners) {
                             try {
                                 listener.onEvent(domainEvent);
@@ -112,7 +121,13 @@ public class RocketMqEventServiceImpl extends BaseEventMqService {
         }
     }
 
-    protected String formatTransmissionObject(Object o) {
-        return JsonUtil.encode(o);
+    /**
+     * 解析传输对象
+     * 目前暂时只支持json传输
+     * @param body
+     * @return
+     */
+    private DomainEvent<?> getObject(String body) {
+       return JsonUtil.decode(body, DefaultDomainEvent.class);
     }
 }

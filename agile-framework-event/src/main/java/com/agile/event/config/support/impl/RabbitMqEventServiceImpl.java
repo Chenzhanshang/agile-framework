@@ -139,9 +139,9 @@ public class RabbitMqEventServiceImpl extends BaseEventMqService {
      * @param body
      * @return
      */
-    private DomainEvent<Object> getObject(AMQP.BasicProperties properties, byte[] body) {
+    private DomainEvent<?> getObject(AMQP.BasicProperties properties, byte[] body) {
         if (MessageProperties.CONTENT_TYPE_JSON.equals(properties.getContentType())) {
-            return (DomainEvent) JsonUtil.decode(new String(body), DefaultDomainEvent.class);
+            return JsonUtil.decode(new String(body), DefaultDomainEvent.class);
         }
         throw FrameworkException.of("【领域事件】: rabbitMQ事件处理失败，暂不支持的传输数据格式");
     }

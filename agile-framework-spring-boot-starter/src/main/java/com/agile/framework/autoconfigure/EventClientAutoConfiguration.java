@@ -4,6 +4,7 @@ import com.agile.event.config.EventClientProperties;
 import com.agile.event.config.factory.DomainEventFactory;
 import com.agile.event.config.support.EventMqService;
 import com.agile.event.config.support.impl.RabbitMqEventServiceImpl;
+import com.agile.event.config.support.impl.RocketMqEventServiceImpl;
 import com.agile.framework.exception.FrameworkException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class EventClientAutoConfiguration {
             case RABBIT_MQ:
                 return new RabbitMqEventServiceImpl();
             case ROCKET_MQ:
-                throw FrameworkException.of("暂不支持的mq实现");
+                return new RocketMqEventServiceImpl();
             case KAFKA:
                 throw FrameworkException.of("暂不支持的mq实现");
             default:
