@@ -8,7 +8,6 @@ import com.agile.event.config.support.BaseEventMqService;
 import com.agile.framework.exception.FrameworkException;
 import com.agile.framework.util.CollectionUtils;
 import com.agile.framework.util.JsonUtil;
-import com.rabbitmq.client.AMQP;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -18,7 +17,6 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -84,7 +82,7 @@ public class RocketMqEventServiceImpl extends BaseEventMqService {
      */
     @Override
     public void subscriber(String source, String eventType, Consumer<DomainEvent<?>> consumer) {
-        String consumerGroup = serviceName + "-consumer-" + source + "-" + eventType + "-" + UUID.randomUUID();
+        String consumerGroup = wrapperRoundCourseGroup(source, serviceName, eventType);
         DefaultMQPushConsumer pushConsumer = new DefaultMQPushConsumer(consumerGroup);
         pushConsumer.setNamesrvAddr(nameServer);
 
@@ -122,12 +120,25 @@ public class RocketMqEventServiceImpl extends BaseEventMqService {
     }
 
     /**
-     * 解析传输对象
-     * 目前暂时只支持json传输
-     * @param body
+     * 做一层封装
+     * 由 （当前服务名+订阅服务名+订阅服务事件）构建出唯一的一条队列通道
+     * 带随机后缀，只会接收 offset 在启动后的消息
+     *
+     * @param serviceName
      * @return
      */
-    private DomainEvent<?> getObject(String body) {
-       return JsonUtil.decode(body, DefaultDomainEvent.class);
+    protected String wrapperRoundCourseGroup(String serviceName, String source, String type) {
+        return serviceName + "-consumer-" + source + "-" + type + "-" + UUID.randomUUID();
+    }
+
+    /**
+     * 做一层封装
+     * 由 （当前服务名+订阅服务名+订阅服务事件）构建出唯一的一条队列通道
+     * 会接收历史消息
+     * @param serviceName
+     * @return
+     */
+    protected String wrapperCourseGroup(String serviceName, String source, String type) {
+        return serviceName + "-consumer-" + source + "-" + type;
     }
 }

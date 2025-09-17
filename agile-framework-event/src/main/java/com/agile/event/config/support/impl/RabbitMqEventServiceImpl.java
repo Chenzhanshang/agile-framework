@@ -8,9 +8,8 @@ import com.agile.event.config.support.BaseEventMqService;
 import com.agile.framework.exception.FrameworkException;
 import com.agile.framework.util.CollectionUtils;
 import com.agile.framework.util.JsonUtil;
+import com.agile.framework.util.RandomUtils;
 import com.agile.framework.util.StringUtils;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
@@ -26,13 +25,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -111,7 +107,7 @@ public class RabbitMqEventServiceImpl extends BaseEventMqService {
                             return;
                         }
                         // 解析消息内容
-                        DomainEvent<?> domainEvent = getObject(properties, body);
+                        DomainEvent<?> domainEvent = getObject(new String(body));
                         for (DomainEventListener domainEventListener : domainEventListeners) {
                             // 前面的观察者处理失败不影响后续观察者处理
                             try {
@@ -133,16 +129,36 @@ public class RabbitMqEventServiceImpl extends BaseEventMqService {
     }
 
     /**
-     * 解析传输对象
-     * 目前暂时只支持json传输
-     * @param properties
-     * @param body
+     * 做一层封装
+     * 由 （当前服务名+订阅服务名+订阅服务事件）构建出唯一的一条队列通道
+     *
+     * @param serviceName
      * @return
      */
-    private DomainEvent<?> getObject(AMQP.BasicProperties properties, byte[] body) {
-        if (MessageProperties.CONTENT_TYPE_JSON.equals(properties.getContentType())) {
-            return JsonUtil.decode(new String(body), DefaultDomainEvent.class);
-        }
-        throw FrameworkException.of("【领域事件】: rabbitMQ事件处理失败，暂不支持的传输数据格式");
+    private String wrapperQueue(String serviceName, String source, String type) {
+        return ("paddy.framework.event.queue." + serviceName + "." + source + "." + type).toLowerCase();
     }
+
+    /**
+     * 包装临时队列
+     * 由 （当前服务名+订阅服务名+订阅服务事件）构建出唯一的一条队列通道
+     *
+     * @param serviceName
+     * @return
+     */
+    private String wrapperTempQueue(String serviceName, String source, String type) {
+        return wrapperQueue(serviceName, source, type) + "." + RandomUtils.createRandomString(5);
+    }
+
+    /**
+     * 包装交换机名称
+     */
+    private String wrapperExchange(String serviceName, String type) {
+        return "agile.framework.event.exchange." + serviceName + "." + type;
+    }
+
+    private String wrapperRoutingKey(String routingKey) {
+        return "agile.framework.event.routingKey." + routingKey;
+    }
+
 }
